@@ -3,11 +3,13 @@ from django.db import models
 
 
 class Category(models.Model):
-    title = models.CharField("Заголовок", max_length=200)
-    slug = models.SlugField("Название в виде url", max_length=200)
+    """Содержит описание категории."""
+
+    title = models.CharField('Заголовок', max_length=200)
+    slug = models.SlugField('Название в виде url', max_length=200)
 
     class Meta:
-        ordering = ["title"]
+        ordering = ['title']
         verbose_name = 'категория'
         verbose_name_plural = 'категории'
 
@@ -16,7 +18,9 @@ class Category(models.Model):
 
 
 class Person(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, )
+    """Содержит автора объявлений, связана с моделью :model:`auth.User`."""
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, verbose_name='Пользователь', )
 
     class Meta:
         verbose_name = 'пользователь'
@@ -27,30 +31,41 @@ class Person(models.Model):
 
     @property
     def posts_number(self):
+        """Возвращает количество опубликованных объявлений продавца."""
         return self.sellers_posts.count()
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=50)
-    content = models.TextField(null=True, blank=True)
+    """
+    Содержит объявление, связано с моделями
+    :model:`main.Category`
+    :model:`main.Person`
+    :model:`main.Tag`
+    """
+
+    title = models.CharField('Название', max_length=50)
+    content = models.TextField('Описание', null=True, blank=True)
+    price = models.PositiveIntegerField('Цена', default=0)
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
-        verbose_name="категория",
+        verbose_name='категория',
         related_name='categories_posts'
     )
     seller = models.ForeignKey(
         Person,
         on_delete=models.CASCADE,
-        verbose_name="продавец",
+        verbose_name='продавец',
         related_name='sellers_posts'
     )
     tags = models.ManyToManyField(
-        "Tag",
-        related_name="posts",
-        verbose_name="Теги",
+        'Tag',
+        related_name='posts',
+        verbose_name='Теги',
         blank=True
     )
+    created = models.DateTimeField('дата создания', auto_now_add=True, null=True)
+    edited = models.DateTimeField('дата редактирования', auto_now=True, null=True)
 
     class Meta:
         verbose_name = 'объявление'
@@ -61,10 +76,12 @@ class Post(models.Model):
 
 
 class Tag(models.Model):
-    title = models.CharField("Тег", max_length=20, unique=True)
+    """Содержит тэги объявлений."""
+
+    title = models.CharField('Тег', max_length=20, unique=True)
 
     class Meta:
-        ordering = ["title"]
+        ordering = ['title']
         verbose_name = 'тег'
         verbose_name_plural = 'теги'
 
