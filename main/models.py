@@ -64,8 +64,8 @@ class Post(models.Model):
         verbose_name='Теги',
         blank=True
     )
-    created = models.DateTimeField('дата создания', auto_now_add=True)
-    edited = models.DateTimeField('дата редактирования', auto_now_add=True)
+    created = models.DateTimeField('дата создания', auto_now_add=True, null=True)
+    edited = models.DateTimeField('дата редактирования', auto_now=True, null=True)
 
     class Meta:
         verbose_name = 'объявление'
