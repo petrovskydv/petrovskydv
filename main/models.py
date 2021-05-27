@@ -3,6 +3,8 @@ from django.db import models
 
 
 class Category(models.Model):
+    """Содержит описание категории."""
+
     title = models.CharField('Заголовок', max_length=200)
     slug = models.SlugField('Название в виде url', max_length=200)
 
@@ -16,6 +18,8 @@ class Category(models.Model):
 
 
 class Person(models.Model):
+    """Содержит автора объявлений, связана с моделью :model:`auth.User`."""
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, verbose_name='Пользователь', )
 
     class Meta:
@@ -27,12 +31,20 @@ class Person(models.Model):
 
     @property
     def posts_number(self):
+        """Возвращает количество опубликованных объявлений продавца."""
         return self.sellers_posts.count()
 
 
 class Post(models.Model):
-    title = models.CharField('Назание',max_length=50)
-    content = models.TextField('Описание',null=True, blank=True)
+    """
+    Содержит объявление, связано с моделями
+    :model:`main.Category`
+    :model:`main.Person`
+    :model:`main.Tag`
+    """
+
+    title = models.CharField('Название', max_length=50)
+    content = models.TextField('Описание', null=True, blank=True)
     price = models.PositiveIntegerField('Цена', default=0)
     category = models.ForeignKey(
         Category,
@@ -52,6 +64,8 @@ class Post(models.Model):
         verbose_name='Теги',
         blank=True
     )
+    created = models.DateTimeField('дата создания', auto_now_add=True)
+    edited = models.DateTimeField('дата редактирования', auto_now_add=True)
 
     class Meta:
         verbose_name = 'объявление'
@@ -62,6 +76,8 @@ class Post(models.Model):
 
 
 class Tag(models.Model):
+    """Содержит тэги объявлений."""
+
     title = models.CharField('Тег', max_length=20, unique=True)
 
     class Meta:
