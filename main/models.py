@@ -4,6 +4,7 @@ from django.db import models
 
 class BasePost(models.Model):
     """Абстрактная модель объявления, содержит общие поля"""
+
     title = models.CharField('Название', max_length=50)
 
     class Meta:
@@ -24,17 +25,17 @@ class Category(BasePost):
         return self.title
 
 
-class Person(models.Model):
-    """Содержит автора объявлений, связана с моделью :model:`auth.User`."""
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, verbose_name='Пользователь', )
+class Person(User):
+    """Содержит автора объявлений, унаследована от :model:`auth.User`."""
 
     class Meta:
+        proxy = True
+        ordering = ('first_name',)
         verbose_name = 'пользователь'
         verbose_name_plural = 'пользователи'
 
     def __str__(self):
-        return self.user.username
+        return self.username
 
     @property
     def posts_number(self):
@@ -124,6 +125,7 @@ class Service(Post):
 
 class ArchivedPost(Post):
     """Архивные объявления."""
+
     class Meta:
         proxy = True
         ordering = ["created"]
