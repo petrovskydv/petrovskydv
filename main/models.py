@@ -2,10 +2,17 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-class Category(models.Model):
+class BasePost(models.Model):
+    """Абстрактная модель объявления, содержит общие поля"""
+    title = models.CharField('Название', max_length=50)
+
+    class Meta:
+        abstract = True
+
+
+class Category(BasePost):
     """Содержит описание категории."""
 
-    title = models.CharField('Заголовок', max_length=200)
     slug = models.SlugField('Название в виде url', max_length=200)
 
     class Meta:
@@ -35,32 +42,31 @@ class Person(models.Model):
         return self.sellers_posts.count()
 
 
-class Post(models.Model):
+class Post(BasePost):
     """
-    Содержит объявление, связано с моделями
+    Модель объявления, содержит общие поля, связано с моделями
     :model:`main.Category`
     :model:`main.Person`
     :model:`main.Tag`
     """
 
-    title = models.CharField('Название', max_length=50)
     content = models.TextField('Описание', null=True, blank=True)
     price = models.PositiveIntegerField('Цена', default=0)
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
         verbose_name='категория',
-        related_name='categories_posts'
+        related_name='%(class)s_categories_posts'
     )
     seller = models.ForeignKey(
         Person,
         on_delete=models.CASCADE,
         verbose_name='продавец',
-        related_name='sellers_posts'
+        related_name='%(class)s_sellers_posts'
     )
     tags = models.ManyToManyField(
         'Tag',
-        related_name='posts',
+        related_name='%(class)s_posts',
         verbose_name='Теги',
         blank=True
     )
@@ -73,6 +79,56 @@ class Post(models.Model):
 
     def __str__(self):
         return f'{self.title} - {str(self.seller)}'
+
+
+class PersonalItem(Post):
+    """Содержит объявления о продаже вещей"""
+
+    condition_choices = [
+        ('new', 'новое'),
+        ('used', 'б/у'),
+    ]
+    condition = models.CharField('состояние', max_length=20, choices=condition_choices, default='used')
+
+    class Meta:
+        verbose_name = 'личные вещи'
+        verbose_name_plural = 'личные вещи'
+
+
+class Car(Post):
+    """Содержит объявления о продаже автомобиля"""
+
+    color = models.CharField('цвет', max_length=20)
+    brand = models.CharField('марка', max_length=20)
+    mileage = models.PositiveIntegerField('пробег')
+
+    class Meta:
+        verbose_name = 'автомобиль'
+        verbose_name_plural = 'автомобили'
+
+
+class Service(Post):
+    """Содержит объявления об услугах"""
+
+    contractor_choices = [
+        ('private_person', 'частное лицо'),
+        ('organization', 'организация'),
+    ]
+    contractor = models.CharField('вид исполнителя', max_length=20, choices=contractor_choices,
+                                  default='private_person')
+
+    class Meta:
+        verbose_name = 'услуга'
+        verbose_name_plural = 'услуги'
+
+
+class ArchivedPost(Post):
+    """Архивные объявления."""
+    class Meta:
+        proxy = True
+        ordering = ["created"]
+        verbose_name = 'архивное объявление'
+        verbose_name_plural = 'архивные объявления'
 
 
 class Tag(models.Model):
