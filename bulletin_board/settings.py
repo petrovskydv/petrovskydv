@@ -13,6 +13,11 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from environs import Env
+
+env = Env()
+env.read_env()
+
 import main.apps
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -131,3 +136,5 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"), )
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SITE_ID = 1
+
+MAINTENANCE_MODE = env.bool('DEBUG', False)
