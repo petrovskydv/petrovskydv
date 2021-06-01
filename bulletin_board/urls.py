@@ -22,4 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('pages/', include('django.contrib.flatpages.urls')),
+    path('cars', views.CarList.as_view(), name='cars'),
+    path('services', views.ServiceList.as_view(), name='services'),
+    path('items', views.PersonalItemList.as_view(), name='items'),
 ]

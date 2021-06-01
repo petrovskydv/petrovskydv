@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Автомобили
+{% endblock %}
+
+{% block content %}
+  <h2>Автомобили</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Марка</th>
+        <th scope="col">Цвет</th>
+        <th scope="col">Пробег</th>
+        <th scope="col">Цена</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% for car in object_list %}
+          <td>{{ car.brand }}</td>
+          <td>{{ car.color }}</td>
+          <td>{{ car.mileage }}</td>
+          <td>{{ car.price }}</td>
+        {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}
