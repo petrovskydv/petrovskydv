@@ -18,12 +18,12 @@
     </thead>
     <tbody>
       <tr>
-        {% for service in object_list %}
-          <td>{{ service.title }}</td>
-          <td>{{ service.content }}</td>
-          <td>{{ service.condition }}</td>
-          <td>{{ car.seller }}</td>
-          <td>{{ car.price }}</td>
+        {% for item in object_list %}
+          <td>{{ item.title }}</td>
+          <td>{{ item.content }}</td>
+          <td>{{ item.condition }}</td>
+          <td>{{ item.seller }}</td>
+          <td>{{ item.price }}</td>
         {% endfor %}
       </tr>
     </tbody>

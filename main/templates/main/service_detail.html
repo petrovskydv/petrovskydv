@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Услуга
+{% endblock %}
+
+{% block content %}
+  <h2>Услуга</h2>
+  <table class="table">
+    <tbody>
+      <tr>
+          <td>Название</td>
+          <td>{{ service.title }}</td>
+      </tr>
+      <tr>
+          <td>Описание</td>
+          <td>{{ service.content }}</td>
+      </tr>
+      <tr>
+          <td>Продавец</td>
+          <td>{{ service.seller }}</td>
+      </tr>
+      <tr>
+          <td>Цена</td>
+          <td>{{ service.price }}</td>
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}

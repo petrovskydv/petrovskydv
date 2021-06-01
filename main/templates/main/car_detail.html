@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Автомобиль
+{% endblock %}
+
+{% block content %}
+  <h2>Автомобиль</h2>
+  <table class="table">
+    <tbody>
+      <tr>
+          <td>Марка</td>
+          <td>{{ car.brand }}</td>
+      </tr>
+      <tr>
+          <td>Цвет</td>
+          <td>{{ car.color }}</td>
+      </tr>
+      <tr>
+          <td>Пробег</td>
+          <td>{{ car.mileage }}</td>
+      </tr>
+      <tr>
+          <td>Цена</td>
+          <td>{{ car.price }}</td>
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}
