@@ -6,6 +6,8 @@
 
 {% block content %}
 
+  {% include 'header.html' %}
+
   {% if maintenance_mode %}
     <div>
       На сайте проводятся технические работы
@@ -23,8 +25,6 @@
     </ul>
   {% endif %}
 
-    <div>
-      {{user}}
-    </div>
+  {% include 'footer.html' %}
 
 {% endblock %}
