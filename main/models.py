@@ -77,6 +77,7 @@ class Post(BasePost):
     class Meta:
         verbose_name = 'объявление'
         verbose_name_plural = 'объявления'
+        ordering = ['id']
 
     def __str__(self):
         return f'{self.title} - {str(self.seller)}'
