@@ -14,16 +14,18 @@
         <th scope="col">Состояние</th>
         <th scope="col">Продавец</th>
         <th scope="col">Цена</th>
+        <th scope="col">Тэги</th>
       </tr>
     </thead>
     <tbody>
-      {% for item in object_list %}
+      {% for object in object_list %}
         <tr>
-          <td>{{ item.title }}</td>
-          <td>{{ item.content }}</td>
-          <td>{{ item.condition }}</td>
-          <td>{{ item.seller }}</td>
-          <td>{{ item.price }}</td>
+          <td>{{ object.title }}</td>
+          <td>{{ object.content }}</td>
+          <td>{{ object.condition }}</td>
+          <td>{{ object.seller }}</td>
+          <td>{{ object.price }}</td>
+          <td>{% include 'tags.html' %}</td>
         </tr>
       {% endfor %}
     </tbody>

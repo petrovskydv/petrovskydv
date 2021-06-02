@@ -13,15 +13,17 @@
         <th scope="col">Описание</th>
         <th scope="col">Продавец</th>
         <th scope="col">Цена</th>
+        <th scope="col">Тэги</th>
       </tr>
     </thead>
     <tbody>
-      {% for service in object_list %}
+      {% for object in object_list %}
         <tr>
-          <td>{{ service.title }}</td>
-          <td>{{ service.content }}</td>
-          <td>{{ service.seller }}</td>
-          <td>{{ service.price }}</td>
+          <td>{{ object.title }}</td>
+          <td>{{ object.content }}</td>
+          <td>{{ object.seller }}</td>
+          <td>{{ object.price }}</td>
+          <td>{% include 'tags.html' %}</td>
         </tr>
       {% endfor %}
     </tbody>
