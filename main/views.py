@@ -14,6 +14,7 @@ def index(request):
 
 class CarList(ListView):
     model = Car
+    paginate_by = 10
 
 
 class CarDetailView(DetailView):
@@ -22,6 +23,7 @@ class CarDetailView(DetailView):
 
 class ServiceList(ListView):
     model = Service
+    paginate_by = 10
 
 
 class ServiceDetailView(DetailView):
@@ -30,6 +32,7 @@ class ServiceDetailView(DetailView):
 
 class PersonalItemList(ListView):
     model = PersonalItem
+    paginate_by = 10
 
 
 class PersonalItemDetailView(DetailView):

@@ -17,15 +17,18 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        {% for item in object_list %}
+      {% for item in object_list %}
+        <tr>
           <td>{{ item.title }}</td>
           <td>{{ item.content }}</td>
           <td>{{ item.condition }}</td>
           <td>{{ item.seller }}</td>
           <td>{{ item.price }}</td>
-        {% endfor %}
-      </tr>
+        </tr>
+      {% endfor %}
     </tbody>
   </table>
+
+  {% include 'paginator.html' %}
+
 {% endblock %}

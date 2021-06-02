@@ -16,14 +16,17 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        {% for car in object_list %}
+      {% for car in object_list %}
+        <tr>
           <td>{{ car.brand }}</td>
           <td>{{ car.color }}</td>
           <td>{{ car.mileage }}</td>
           <td>{{ car.price }}</td>
-        {% endfor %}
-      </tr>
+        </tr>
+      {% endfor %}
     </tbody>
   </table>
+
+  {% include 'paginator.html' %}
+
 {% endblock %}
