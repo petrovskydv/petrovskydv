@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import UpdateView
 
 from bulletin_board.settings import MAINTENANCE_MODE
-from main.models import Car, Service, PersonalItem
+from main.models import Car, Service, PersonalItem, Profile
 
 
 def index(request):
@@ -61,3 +62,8 @@ class PersonalItemList(ListView):
 
 class PersonalItemDetailView(DetailView):
     model = PersonalItem
+
+
+class ProfileUpdate(UpdateView):
+    model = Profile
+    fields = ['first_name', 'last_name', 'email', 'birthdate']
