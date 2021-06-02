@@ -44,11 +44,15 @@ class Person(User):
 
 
 class Profile(User):
-    birthdate = models.DateTimeField('дата рождения', auto_now_add=True, null=True)
+    birthdate = models.DateTimeField('дата рождения', blank=True, null=True)
 
     class Meta:
         verbose_name = 'профиль'
         verbose_name_plural = 'профили'
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('profile-update', args=[str(self.id)])
 
 
 class Post(models.Model):
