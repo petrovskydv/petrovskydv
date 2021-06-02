@@ -43,6 +43,14 @@ class Person(User):
         return self.sellers_posts.count()
 
 
+class Profile(User):
+    birthdate = models.DateTimeField('дата рождения', auto_now_add=True, null=True)
+
+    class Meta:
+        verbose_name = 'профиль'
+        verbose_name_plural = 'профили'
+
+
 class Post(models.Model):
     """
     Модель объявления, содержит общие поля, связано с моделями
