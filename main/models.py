@@ -43,14 +43,14 @@ class Person(User):
         return self.sellers_posts.count()
 
 
-class Post(BasePost):
+class Post(models.Model):
     """
     Модель объявления, содержит общие поля, связано с моделями
     :model:`main.Category`
     :model:`main.Person`
     :model:`main.Tag`
     """
-
+    title = models.CharField('Название', max_length=50)
     content = models.TextField('Описание', null=True, blank=True)
     price = models.PositiveIntegerField('Цена', default=0)
     category = models.ForeignKey(
@@ -77,7 +77,8 @@ class Post(BasePost):
     class Meta:
         verbose_name = 'объявление'
         verbose_name_plural = 'объявления'
-        ordering = ['id']
+
+        abstract = True
 
     def __str__(self):
         return f'{self.title} - {str(self.seller)}'
@@ -95,6 +96,7 @@ class PersonalItem(Post):
     class Meta:
         verbose_name = 'личные вещи'
         verbose_name_plural = 'личные вещи'
+        ordering = ['title']
 
 
 class Car(Post):
@@ -107,6 +109,7 @@ class Car(Post):
     class Meta:
         verbose_name = 'автомобиль'
         verbose_name_plural = 'автомобили'
+        ordering = ['title']
 
 
 class Service(Post):
@@ -122,9 +125,10 @@ class Service(Post):
     class Meta:
         verbose_name = 'услуга'
         verbose_name_plural = 'услуги'
+        ordering = ['title']
 
 
-class ArchivedPost(Post):
+class ArchivedPost(Service):
     """Архивные объявления."""
 
     class Meta:
