@@ -7,6 +7,8 @@ from main.models import Car, Service, PersonalItem, Profile
 
 
 def index(request):
+    """Отображает главную страницу"""
+
     context = {
         'maintenance_mode': MAINTENANCE_MODE,
     }
@@ -14,6 +16,8 @@ def index(request):
 
 
 class CarList(ListView):
+    """Отображает список объявлений с автомобилями"""
+
     model = Car
     paginate_by = 10
 
@@ -27,10 +31,14 @@ class CarList(ListView):
 
 
 class CarDetailView(DetailView):
+    """Отображает детальное представление объявления с автомобилем"""
+
     model = Car
 
 
 class ServiceList(ListView):
+    """Отображает список объявлений с услугами"""
+
     model = Service
     paginate_by = 10
 
@@ -44,10 +52,14 @@ class ServiceList(ListView):
 
 
 class ServiceDetailView(DetailView):
+    """Отображает детальное представление объявления с услугой"""
+
     model = Service
 
 
 class PersonalItemList(ListView):
+    """Отображает список объявлений с вещами"""
+
     model = PersonalItem
     paginate_by = 10
 
@@ -61,6 +73,8 @@ class PersonalItemList(ListView):
 
 
 class PersonalItemDetailView(DetailView):
+    """Отображает детальное представление объявления с личными вещами"""
+
     model = PersonalItem
 
 
