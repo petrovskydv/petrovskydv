@@ -18,11 +18,11 @@ class CarList(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        result = super(CarList, self).get_queryset()
-
         tag_filter = self.request.GET.get('tag')
         if tag_filter:
             result = Car.objects.filter(tags__id=tag_filter)
+        else:
+            result = super(CarList, self).get_queryset()
         return result
 
 
@@ -35,11 +35,11 @@ class ServiceList(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        result = super(ServiceList, self).get_queryset()
-
         tag_filter = self.request.GET.get('tag')
         if tag_filter:
             result = Service.objects.filter(tags__id=tag_filter)
+        else:
+            result = super(ServiceList, self).get_queryset()
         return result
 
 
@@ -52,11 +52,11 @@ class PersonalItemList(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        result = super(PersonalItemList, self).get_queryset()
-
         tag_filter = self.request.GET.get('tag')
         if tag_filter:
             result = PersonalItem.objects.filter(tags__id=tag_filter)
+        else:
+            result = super(PersonalItemList, self).get_queryset()
         return result
 
 
