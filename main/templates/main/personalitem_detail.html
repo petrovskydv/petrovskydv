@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Личные вещи
+{% endblock %}
+
+{% block content %}
+  <h2>Личные вещи</h2>
+  <table class="table">
+    <tbody>
+      <tr>
+          <td>Название</td>
+          <td>{{ personalitem.title }}</td>
+      </tr>
+      <tr>
+          <td>Описание</td>
+          <td>{{ personalitem.content }}</td>
+      </tr>
+      <tr>
+          <td>Состояние</td>
+          <td>{{ personalitem.condition }}</td>
+      </tr>
+      <tr>
+          <td>Продавец</td>
+          <td>{{ personalitem.seller }}</td>
+      </tr>
+      <tr>
+          <td>Цена</td>
+          <td>{{ personalitem.price }}</td>
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}
