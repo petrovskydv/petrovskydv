@@ -4,7 +4,7 @@ from django.contrib.flatpages.admin import FlatPageAdmin
 from django.contrib.flatpages.models import FlatPage
 from django.db import models
 
-from main.models import Category, Person, Tag, PersonalItem, Car, Service, ArchivedPost
+from main.models import Category, Person, Tag, PersonalItem, Car, Service, ArchivedPost, Profile
 
 
 class FlatPageAdmin(FlatPageAdmin):
@@ -28,3 +28,4 @@ admin.site.register(Tag)
 admin.site.register(PersonalItem)
 admin.site.register(Car)
 admin.site.register(Service)
+admin.site.register(Profile)

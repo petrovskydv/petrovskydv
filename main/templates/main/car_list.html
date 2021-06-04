@@ -13,17 +13,23 @@
         <th scope="col">Цвет</th>
         <th scope="col">Пробег</th>
         <th scope="col">Цена</th>
+        <th scope="col">Тэги</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        {% for car in object_list %}
-          <td>{{ car.brand }}</td>
-          <td>{{ car.color }}</td>
-          <td>{{ car.mileage }}</td>
-          <td>{{ car.price }}</td>
-        {% endfor %}
-      </tr>
+      {% for object in object_list %}
+        <tr>
+          <td>{{ object.brand }}</td>
+          <td>{{ object.color }}</td>
+          <td>{{ object.mileage }}</td>
+          <td>{{ object.price }}</td>
+          <td>{{ object.price }}</td>
+          <td>{% include 'tags.html' %}</td>
+        </tr>
+      {% endfor %}
     </tbody>
   </table>
+
+  {% include 'paginator.html' %}
+
 {% endblock %}
