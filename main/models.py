@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from sorl.thumbnail import ImageField
 
 
 class BasePost(models.Model):
@@ -46,7 +47,7 @@ class Person(User):
 
 class Profile(User):
     birthdate = models.DateTimeField('дата рождения', blank=True, null=True)
-    img = models.ImageField(upload_to='images', blank=True, default='images/default.jpg')
+    img = ImageField(upload_to='images', blank=True, default='images/default.jpg')
 
     class Meta:
         verbose_name = 'профиль'
