@@ -167,3 +167,9 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Picture(models.Model):
+    """Содержит картинки"""
+    img = ImageField(upload_to='images', blank=True)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, default=None)
