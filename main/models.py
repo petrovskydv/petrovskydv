@@ -46,6 +46,7 @@ class Person(User):
 
 class Profile(User):
     birthdate = models.DateTimeField('дата рождения', blank=True, null=True)
+    img = models.ImageField(upload_to='images', blank=True, default='images/default.jpg')
 
     class Meta:
         verbose_name = 'профиль'
