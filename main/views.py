@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, CreateView
 
 from bulletin_board.settings import MAINTENANCE_MODE
 from main.models import Car, Service, PersonalItem, Profile
@@ -34,6 +34,16 @@ class CarDetailView(DetailView):
     """Отображает детальное представление объявления с автомобилем"""
 
     model = Car
+
+
+class CarCreateView(CreateView):
+    model = Car
+    fields = '__all__'
+
+
+class CarUpdateView(UpdateView):
+    model = Car
+    fields = '__all__'
 
 
 class ServiceList(ListView):

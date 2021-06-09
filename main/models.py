@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 
 class BasePost(models.Model):
@@ -51,7 +52,6 @@ class Profile(User):
         verbose_name_plural = 'профили'
 
     def get_absolute_url(self):
-        from django.urls import reverse
         return reverse('profile-update', args=[str(self.id)])
 
 
@@ -122,6 +122,9 @@ class Car(Post):
         verbose_name = 'автомобиль'
         verbose_name_plural = 'автомобили'
         ordering = ['title']
+
+    def get_absolute_url(self):
+        return reverse('car-detail', args=[str(self.id)])
 
 
 class Service(Post):
