@@ -6,8 +6,12 @@
 
 {% block content %}
   <h2>Автомобиль</h2>
-  <form method="post">{% csrf_token %}
+
+  <form method="post" enctype="multipart/form-data">{% csrf_token %}
     {{ form.as_p }}
+    <table>
+      {{ images.as_table }}
+    </table>
     <input type="submit" value="Save">
   </form>
 {% endblock %}
