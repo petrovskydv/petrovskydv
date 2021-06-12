@@ -2,6 +2,7 @@
 
 from django.db import migrations, models
 import main.models
+import main.utils
 
 
 class Migration(migrations.Migration):
@@ -14,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='profile',
             name='birthdate',
-            field=models.DateField(blank=True, null=True, validators=[main.models.validate_birthday], verbose_name='дата рождения'),
+            field=models.DateField(blank=True, null=True, validators=[main.utils.validate_birthday], verbose_name='дата рождения'),
         ),
     ]
