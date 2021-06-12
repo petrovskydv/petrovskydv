@@ -1,9 +1,11 @@
+from django.contrib import messages
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, CreateView
 
 from bulletin_board.settings import MAINTENANCE_MODE
-from main.models import Car, Service, PersonalItem, Profile
+from main import forms
+from main.models import Car, Service, PersonalItem, Profile, Person
 
 
 def index(request):
@@ -40,10 +42,36 @@ class CarCreateView(CreateView):
     model = Car
     fields = '__all__'
 
+    def get_context_data(self, **kwargs):
+        data = super(CarCreateView, self).get_context_data(**kwargs)
+        data['images'] = forms.CarImageFormset()
+        return data
+
+    def form_valid(self, form):
+        form.instance.seller = Person.objects.get(pk=self.request.user.id)
+        self.object = form.save()
+
+        if self.request.POST:
+            images = forms.CarImageFormset(self.request.POST, self.request.FILES)
+        else:
+            images = forms.CarImageFormset()
+
+        messages.add_message(self.request, messages.SUCCESS, 'Changes were saved.')
+
+        if images.is_valid():
+            images.instance = self.object
+            images.save()
+        return super(CarCreateView, self).form_valid(form)
+
 
 class CarUpdateView(UpdateView):
     model = Car
     fields = '__all__'
+
+    def get_context_data(self, **kwargs):
+        data = super(CarUpdateView, self).get_context_data(**kwargs)
+        data['images'] = forms.CarImageFormset()
+        return data
 
 
 class ServiceList(ListView):

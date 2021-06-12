@@ -1,3 +1,10 @@
+{% load thumbnail %}
 <div>
   {{request.user}}
+  <p>
+    {% thumbnail  user.profile.img "50x50" crop="center" as im %}
+      <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+    {% endthumbnail %}
+  </p>
+
 </div>

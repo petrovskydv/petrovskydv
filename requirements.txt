@@ -1,3 +1,5 @@
 django==3.2.3
 django-ckeditor==6.0.0
 environs==9.3.2
+Pillow==8.2.0
+sorl-thumbnail==12.7.0

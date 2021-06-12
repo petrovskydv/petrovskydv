@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from sorl.thumbnail import ImageField
 
 
 class BasePost(models.Model):
@@ -46,6 +47,7 @@ class Person(User):
 
 class Profile(User):
     birthdate = models.DateTimeField('дата рождения', blank=True, null=True)
+    img = ImageField(upload_to='images', blank=True, default='images/default.jpg')
 
     class Meta:
         verbose_name = 'профиль'
@@ -165,3 +167,9 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Picture(models.Model):
+    """Содержит картинки"""
+    img = ImageField(upload_to='images', blank=True)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, default=None)
