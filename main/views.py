@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, CreateView
@@ -38,7 +39,7 @@ class CarDetailView(DetailView):
     model = Car
 
 
-class CarCreateView(CreateView):
+class CarCreateView(LoginRequiredMixin, CreateView):
     model = Car
     fields = '__all__'
 
@@ -64,7 +65,7 @@ class CarCreateView(CreateView):
         return super(CarCreateView, self).form_valid(form)
 
 
-class CarUpdateView(UpdateView):
+class CarUpdateView(LoginRequiredMixin, UpdateView):
     model = Car
     fields = '__all__'
 
@@ -116,6 +117,6 @@ class PersonalItemDetailView(DetailView):
     model = PersonalItem
 
 
-class ProfileUpdate(UpdateView):
+class ProfileUpdate(LoginRequiredMixin, UpdateView):
     model = Profile
     fields = ['first_name', 'last_name', 'email', 'birthdate']
