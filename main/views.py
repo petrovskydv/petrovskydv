@@ -119,4 +119,4 @@ class PersonalItemDetailView(DetailView):
 
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
     model = Profile
-    fields = ['first_name', 'last_name', 'email', 'birthdate']
+    fields = ['username', 'first_name', 'last_name', 'email', 'birthdate']
