@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, CreateView
@@ -39,9 +39,10 @@ class CarDetailView(DetailView):
     model = Car
 
 
-class CarCreateView(LoginRequiredMixin, CreateView):
+class CarCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Car
     fields = '__all__'
+    permission_required = 'main.add_car'
 
     def get_context_data(self, **kwargs):
         data = super(CarCreateView, self).get_context_data(**kwargs)
@@ -65,9 +66,10 @@ class CarCreateView(LoginRequiredMixin, CreateView):
         return super(CarCreateView, self).form_valid(form)
 
 
-class CarUpdateView(LoginRequiredMixin, UpdateView):
+class CarUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Car
     fields = '__all__'
+    permission_required = 'main.change_car'
 
     def get_context_data(self, **kwargs):
         data = super(CarUpdateView, self).get_context_data(**kwargs)
