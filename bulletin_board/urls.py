@@ -22,11 +22,9 @@ urlpatterns = [
     path('items/<int:pk>/', views.PersonalItemDetailView.as_view(), name='items-detail'),
 
     path('accounts/profile/<int:pk>/', views.ProfileUpdate.as_view(), name='profile-update'),
+
+    path('accounts/', include('allauth.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-#Add Django site authentication urls (for login, logout, password management)
-urlpatterns += [
-    path('accounts/', include('django.contrib.auth.urls')),
-]
