@@ -39,7 +39,7 @@ class CarDetailView(DetailView):
     model = Car
 
 
-class CarCreateView(CreateView):
+class CarCreateView(LoginRequiredMixin, CreateView):
     model = Car
     fields = '__all__'
 
@@ -65,7 +65,7 @@ class CarCreateView(CreateView):
         return super(CarCreateView, self).form_valid(form)
 
 
-class CarUpdateView(UpdateView):
+class CarUpdateView(LoginRequiredMixin, UpdateView):
     model = Car
     fields = '__all__'
 
