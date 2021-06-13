@@ -181,3 +181,23 @@ class Picture(models.Model):
     """Содержит картинки"""
     img = ImageField(upload_to='images', blank=True)
     car = models.ForeignKey(Car, on_delete=models.CASCADE, default=None)
+
+    class Meta:
+        verbose_name = "картинка"
+        verbose_name_plural = "картинки"
+
+
+class Subscriber(models.Model):
+    """Содержит подписчиков на новые объявления"""
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="подписчик")
+
+    class Meta:
+        verbose_name = "подписчик"
+        verbose_name_plural = "подписчики"
+
+    def __str__(self):
+        return f'{self.user.first_name} {self.user.last_name} {self.user.email}'
