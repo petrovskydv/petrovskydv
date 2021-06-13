@@ -120,6 +120,9 @@ class PersonalItem(Post):
         verbose_name_plural = 'личные вещи'
         ordering = ['title']
 
+    def get_absolute_url(self):
+        return reverse('items-detail', args=[str(self.id)])
+
 
 class Car(Post):
     """Содержит объявления о продаже автомобиля"""
