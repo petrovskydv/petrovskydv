@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
-from django.utils.timezone import now
 from sorl.thumbnail import ImageField
+
+from main.utils import validate_birthday
 
 
 class BasePost(models.Model):
@@ -47,14 +47,13 @@ class Person(User):
         return self.sellers_posts.count()
 
 
-def validate_birthday(birthday):
-    today = now()
-    if (today.year - birthday.year) < 18:
-        raise ValidationError('Вам нет 18!')
-
-
 class Profile(User):
-    birthdate = models.DateField('дата рождения', blank=True, null=True, validators=[validate_birthday])
+    birthdate = models.DateField(
+        'дата рождения',
+        blank=True,
+        null=True,
+        validators=[validate_birthday]
+    )
     img = ImageField(upload_to='images', blank=True, default='images/default.jpg')
 
     class Meta:
