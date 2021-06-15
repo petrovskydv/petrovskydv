@@ -7,3 +7,4 @@ _ _ pycache _ _
 /staticfiles/
 /images/
 /media/
+/.env
