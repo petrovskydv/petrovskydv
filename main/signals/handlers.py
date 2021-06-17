@@ -10,7 +10,8 @@ from main.models import PersonalItem, Subscriber
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        instance.groups.add(Group.objects.get(name='common users'))
+        common_users, create = Group.objects.get_or_create(name='common users')
+        instance.groups.add(common_users)
         text_content = 'Вы зарегистрированы на сайте.'
         html_content = '<p>Вы зарегистрированы на сайте.</p>'
         send_email(text_content, text_content, html_content, [instance.email])
