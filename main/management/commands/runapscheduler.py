@@ -1,21 +1,30 @@
+import datetime
 import logging
-
-from django.conf import settings
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
+from django.conf import settings
 from django.core.management.base import BaseCommand
+from django.template.loader import render_to_string
+from django.utils.timezone import now
 from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
-from django_apscheduler import util
+
+from main.models import Car, Subscriber
+from main.utils import send_email
 
 logger = logging.getLogger(__name__)
 
 
-def my_job():
-    # Your job processing logic here...
-    # pass
-    print('Hello!1111')
+def send_new_cars_email():
+    new_cars_date = now() - datetime.timedelta(days=7)
+    new_cars_titles = [car.title for car in Car.objects.filter(created__lte=new_cars_date)]
+    recipients = [subscriber.user.email for subscriber in Subscriber.objects.all()]
+    text_content = 'На сайте появилось новые объявления.'
+    html_content = render_to_string('main/new_cars_email.html', new_cars_titles)
+    if new_cars_titles:
+        send_email(text_content, text_content, html_content, recipients)
+
 
 # The `close_old_connections` decorator ensures that database connections, that have become unusable or are obsolete,
 # are closed before and after our job has run.
@@ -39,9 +48,9 @@ class Command(BaseCommand):
         scheduler.add_jobstore(DjangoJobStore(), "default")
 
         scheduler.add_job(
-            my_job,
-            trigger=CronTrigger(second="*/10"),  # Every 10 seconds
-            id="my_job",  # The `id` assigned to each job MUST be unique
+            send_new_cars_email,
+            trigger=CronTrigger(day_of_week="mon", hour="08", minute="00"),
+            id="send_new_cars_email",  # The `id` assigned to each job MUST be unique
             max_instances=1,
             replace_existing=True,
         )
