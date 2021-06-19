@@ -1,16 +1,17 @@
 from django.contrib.auth.models import User, Group
-from django.core.mail import EmailMultiAlternatives
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
 
 from main.models import PersonalItem, Subscriber
+from main.utils import send_email
 
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        instance.groups.add(Group.objects.get(name='common users'))
+        common_users, create = Group.objects.get_or_create(name='common users')
+        instance.groups.add(common_users)
         text_content = 'Вы зарегистрированы на сайте.'
         html_content = '<p>Вы зарегистрированы на сайте.</p>'
         send_email(text_content, text_content, html_content, [instance.email])
@@ -27,8 +28,3 @@ def notify_subscribers(sender, instance, created, **kwargs):
         send_email(text_content, text_content, html_content, recipients)
 
 
-def send_email(subject, text_content, html_content, recipients):
-    from_email = 'from@example.com'
-    msg = EmailMultiAlternatives(subject, text_content, from_email, recipients)
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()

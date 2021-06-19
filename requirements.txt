@@ -4,3 +4,4 @@ environs==9.3.2
 Pillow==8.2.0
 sorl-thumbnail==12.7.0
 django-allauth==0.44.0
+django-apscheduler==0.5.2
