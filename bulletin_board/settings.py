@@ -56,6 +56,8 @@ INSTALLED_APPS = [
 
     'django_apscheduler',
 
+    'django_celery_beat',
+
 ]
 
 MIDDLEWARE = [

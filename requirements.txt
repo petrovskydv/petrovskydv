@@ -7,3 +7,4 @@ django-allauth==0.44.0
 django-apscheduler==0.5.2
 redis==3.5.3
 celery==5.1.1
+django-celery-beat==2.2.0
