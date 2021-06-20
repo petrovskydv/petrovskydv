@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User, Group
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.urls import reverse
 
-from main.models import PersonalItem, Subscriber
+from main.models import PersonalItem
+from main.tasks import send_new_item_email_task
 from main.utils import send_email
 
 
@@ -20,11 +20,4 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=PersonalItem)
 def notify_subscribers(sender, instance, created, **kwargs):
     if created:
-        subscribers = Subscriber.objects.all()
-        recipients = [subscriber.user.email for subscriber in subscribers]
-        text_content = 'На сайте появилось новое объявление.'
-        html_content = f'<p>На сайте появилось новое объявление.</p> ' \
-                       f'<a href={reverse("items-detail", args=[str(instance.id)])}></a>'
-        send_email(text_content, text_content, html_content, recipients)
-
-
+        send_new_item_email_task.delay(instance.id)
