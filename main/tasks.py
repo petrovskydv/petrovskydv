@@ -35,7 +35,7 @@ def send_new_item_email_task(instance_id):
     send_email(text_content, text_content, html_content, recipients)
 
 
-@app(name="send_new_cars_email")
+@app.task(name="send_new_cars_email")
 def send_new_cars_email():
     new_cars_date = now() - datetime.timedelta(days=7)
     new_cars_titles = [car.title for car in Car.objects.filter(created__lte=new_cars_date)]

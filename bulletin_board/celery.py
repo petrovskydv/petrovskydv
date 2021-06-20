@@ -9,7 +9,7 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
-    'add-every-monday-morning': {
+    'send_new_cars_email_every_monday': {
         'task': 'send_new_cars_email',
         'schedule': crontab(hour=8, minute=00, day_of_week=1),
         'args': (),
