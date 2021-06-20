@@ -7,3 +7,30 @@ services:
     ports:
       - "6379:6379"
     restart: always
+  web:
+    build: .
+    restart: always
+    container_name: 'app_django'
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    links:
+      - redis
+    ports:
+      - '8000:8000'
+  celery:
+    build: .
+    container_name: 'app_celery'
+    command: celery -A bulletin_board worker -B
+    volumes:
+      - .:/code
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+    links:
+      - redis
+    depends_on:
+      - web
+      - redis
