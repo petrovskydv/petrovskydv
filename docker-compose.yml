@@ -21,14 +21,14 @@ services:
   celery:
     build: .
     container_name: 'app_celery'
-    command: celery -A bulletin_board worker -B
+    command: celery -A bulletin_board worker -l INFO
     volumes:
       - .:/code
     environment:
       - DEBUG=1
       - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-      - CELERY_BROKER=redis://redis:6379/0
-      - CELERY_BACKEND=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
     links:
       - redis
     depends_on:
