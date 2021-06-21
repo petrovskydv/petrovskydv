@@ -21,7 +21,23 @@ services:
   celery:
     build: .
     container_name: 'app_celery'
-    command: celery -A bulletin_board worker -l INFO
+    command: celery -A bulletin_board worker -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - .:/code
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    links:
+      - redis
+    depends_on:
+      - web
+      - redis
+  celery-beat:
+    build: .
+    container_name: 'app_celery_beat'
+    command: celery -A bulletin_board beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:
       - .:/code
     environment:
