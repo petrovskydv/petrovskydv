@@ -1,0 +1,16 @@
+from celery import shared_task
+
+
+@shared_task
+def hello_task():
+    print(f'Hello from Celery!')
+
+
+@shared_task
+def add(x, y):
+    return x + y
+
+
+@shared_task
+def mul(x, y):
+    return x * y

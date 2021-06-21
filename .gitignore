@@ -8,3 +8,4 @@ _ _ pycache _ _
 /images/
 /media/
 /.env
+/celerybeat-schedule
